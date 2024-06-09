@@ -1,9 +1,16 @@
 import pygame
+from random import randint
 
 WIDTH = 1000
 HEIGHT = 600
 SIZE = (WIDTH, HEIGHT)
 FPS = 60
+
+platform_num = 3
+circle_num = 5
+
+circles = []
+platformes = []
 
 window = pygame.display.set_mode(SIZE)
 clock = pygame.time.Clock()
@@ -39,13 +46,18 @@ class Player(GameSprite):
 
 
 
+circle = GameSprite("circle.png", (50, 50), (400, 150))
+platform = GameSprite("square.png", (200, 35), (600, 300))
+item = GameSprite("square.png", (500,400), (0, 600))
+stickman = GameSprite("stickman.png", (100, 100), (100, 400))
 
+for i in range(circle_num):
+    new_circle = GameSprite("circle.png", (50, 75), (randint(100, 1200), randint(50, 50)))
+    circles.append(new_circle)
 
-
-
-
-
-Player = GameSprite("stick.png", (250, 250), (350, 123))
+for i in range(platform_num):
+    new_platform = GameSprite("square.png", (50, 75), (randint(600, 1200), randint(200, 900)))
+    platformes.append(new_platform)
 
 game_over = False
 while not game_over:
@@ -53,6 +65,12 @@ while not game_over:
         if event.type == pygame.QUIT:
             game_over = True
     window.blit(background, (0, 0))
-    Player.reset()
+    stickman.reset()
+    item.reset()
+    platform.reset()
+    for c in circles:
+        c.reset()
+    for t in platformes:
+        t.reset()
     pygame.display.update()
     clock.tick(FPS)
